@@ -16,26 +16,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-const { libcamera } = require('libcamera');
-const sharp = require('sharp');
-const fs = require('fs').promises;
+const Gpio = require('pigpio').Gpio;
+//const motor = new Gpio(18, {mode: Gpio.OsUTPUT});
 
-//no filter = 170
-// blue = 10
-// green = 61
-// red = 115
+const PULSE_WIDTH_0 = 500; // Pulse width in microseconds for 0 degrees
+const PULSE_WIDTH_180 = 2000; // Pulse width in microseconds for 180 degrees
+
+async function moveServoTo(angle) {
+  let motor = new Gpio(18, {mode: Gpio.OsUTPUT});
+  let microSeconds = PULSE_WIDTH_0 + (angle / 180) * (PULSE_WIDTH_180 - PULSE_WIDTH_0);
+  console.log("micoSeconds = "+microSeconds);
+  motor.servoWrite(Math.round(microSeconds));
+  return true;
+}
+
+
+let increment = 1;
 
 module.exports = {
-  async updateCamera(mode) {
-    await libcamera.jpeg({ config: { output: 'images/'+mode+'.jpg' } });
+  async moveToAngle(angle) {
+    console.log("Angle="+angle);
+    await moveServoTo(angle);
     return true;
-  },
-  async getCamera1(mode) {
-    const data = await fs.readFile('images/'+mode+'.jpg', "binary")
-    return Buffer.from(data, 'binary');
-  },
-  async getCamera(mode) {
-    const data = await sharp('images/'+mode+'.jpg').extract({ width: 1920, height: 1080, left: 60, top: 40 }).toBuffer()
-    return data;
-  }  
+  }
 };

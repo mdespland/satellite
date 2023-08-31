@@ -84,5 +84,6 @@ module.exports = function(CameraService){
             }
         }
     };
+    
     return operations;
   }

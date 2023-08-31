@@ -1,7 +1,7 @@
 const Gpio = require('pigpio').Gpio;
 const motor = new Gpio(18, {mode: Gpio.OsUTPUT});
 
-const PULSE_WIDTH_0 = 1000; // Pulse width in microseconds for 0 degrees
+const PULSE_WIDTH_0 = 500; // Pulse width in microseconds for 0 degrees
 const PULSE_WIDTH_180 = 2000; // Pulse width in microseconds for 180 degrees
 
 function moveServoTo(angle) {

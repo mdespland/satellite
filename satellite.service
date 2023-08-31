@@ -1,0 +1,17 @@
+[Unit]
+Description=Satellite
+
+[Service]
+WorkingDirectory=/home/mde/Satellite
+ExecStart=/usr/local/nodejs/node-v18.17.1-linux-armv7l/bin/nodemon index.js
+
+Restart=always
+RestartSec=10
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=autodeploy
+Environment=PATH=/usr/local/nodejs/node-v18.17.1-linux-armv7l/bin:/usr/bin:$PATH
+
+[Install]
+WantedBy=multi-user.target
