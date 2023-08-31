@@ -1,0 +1,469 @@
+openapi: '3.0.2'
+info:
+  title: 3A Satellite API
+  version: '0.1.0'
+servers:
+  - url: /api
+paths: {}
+security:
+  - XAuthToken: []
+components:
+  securitySchemes:
+    XAuthToken:
+      type: apiKey
+      in: header
+      name: X-Auth-Token
+  schemas:
+    Error:
+      type: object
+      properties:
+        code: 
+          type: integer
+        message:
+          type: string
+        id:
+          type: string
+    Status:
+      type: object
+      required:
+        - name
+        - version
+      properties:
+        name:
+          type: string
+        version:
+          type: string
+    Property:
+      type: object
+      required:
+        - value
+        - type
+      properties:
+        value:
+          oneOf:
+            - type: string
+            - type: number
+            - type: object
+            - type: array
+            - type: boolean
+        type:
+          type: string
+          enum: ['Property']
+        unitCode:
+          type: string
+    Relationship:
+      type: object
+      required:
+        - object
+        - type
+      properties:
+        object:
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        type:
+          type: string
+          enum: ['Relationship']
+    GeoProperty:
+      type: object
+      required:
+        - value
+        - type
+      properties:
+        value:
+          oneOf:
+            - $ref: '#/components/schemas/Point'
+            - $ref: '#/components/schemas/Polygon'
+        type:
+          type: string
+          enum: ['GeoProperty']
+    Polygon:
+      type: object
+      required:
+        - type
+        - coordinates
+      properties:
+        type:
+          type: string
+          enum: ['Polygon']
+        coordinates:
+          type: array
+          items:
+            type: array
+            items:
+              type: array
+              items:
+                type: number
+    Point:
+      type: object
+      required:
+        - type
+        - coordinates
+      properties:
+        type:
+          type: string
+          enum: ['Point']
+        coordinates:
+          type: array
+          items:
+            type: number
+    User:
+      type: object
+      required:
+        - type
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: ['User']
+        name:
+          $ref: '#/components/schemas/Property'
+        firebaseToken:
+          $ref: '#/components/schemas/Property' 
+        notify:
+          $ref: '#/components/schemas/Property'
+        email:
+          $ref: '#/components/schemas/Property'
+        password:
+          $ref: '#/components/schemas/Property'
+        isMemberOf:
+          $ref: '#/components/schemas/Relationship'
+        hasAgriParcel:
+          $ref: '#/components/schemas/Relationship'
+        token:
+          $ref: '#/components/schemas/Property'
+    Organization:
+      type: object
+      required:
+        - type
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: ['Organization']
+        name:
+          $ref: '#/components/schemas/Property'
+        dateCreated: 
+          description: "Creation timestamp of the entity."
+          format: date-time
+          readOnly: false
+          type: string
+        dateModified: 
+          description: "Update timestamp of this entity."
+          format: date-time
+          readOnly: false
+          type: string
+    AgriCrop:
+      type: object
+      required:
+        - type
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: ['AgriCrop']
+        test:
+          $ref: '#/components/schemas/Property'
+        dateCreated: 
+          description: "Creation timestamp of the entity."
+          format: date-time
+          readOnly: false
+          type: string
+        dateModified: 
+          description: "Update timestamp of this entity."
+          format: date-time
+          readOnly: false
+          type: string
+    AgriSoil:
+      type: object
+      required:
+        - type
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: ['AgriSoil']
+        dateCreated: 
+          description: "Creation timestamp of the entity."
+          format: date-time
+          readOnly: false
+          type: string
+        dateModified: 
+          description: "Update timestamp of this entity."
+          format: date-time
+          readOnly: false
+          type: string
+    AgriParcel:
+      type: object
+      required:
+        - type
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: ['AgriParcel']
+        ownedBy:
+          $ref: '#/components/schemas/Relationship'
+        location:
+          $ref: '#/components/schemas/GeoProperty'
+        name:
+          $ref: '#/components/schemas/Property'
+        dateCreated: 
+          description: "Creation timestamp of the entity."
+          format: date-time
+          readOnly: false
+          type: string
+        dateModified: 
+          description: "Update timestamp of this entity."
+          format: date-time
+          readOnly: false
+          type: string
+    AgriTree:
+      type: object
+      required:
+        - type
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: ['AgriTree']
+        hasAgriParcel:
+          $ref: '#/components/schemas/Relationship'
+        location:
+          $ref: '#/components/schemas/GeoProperty'
+        diameter:
+          $ref: '#/components/schemas/Property'
+        distance:
+          $ref: '#/components/schemas/Property'
+        height:
+          $ref: '#/components/schemas/Property'
+        position:
+          $ref: '#/components/schemas/Property'
+        hasPhoto:
+          $ref: '#/components/schemas/Property'
+        dateCreated: 
+          description: "Creation timestamp of the entity."
+          format: date-time
+          readOnly: false
+          type: string
+        dateModified: 
+          description: "Update timestamp of this entity."
+          format: date-time
+          readOnly: false
+          type: string
+    Satellite:
+      type: object
+      required:
+        - type
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: ['Satellite']
+        ownedBy:
+          $ref: '#/components/schemas/Relationship'
+        isAnalysisOf:
+          $ref: '#/components/schemas/Relationship'
+        dateCreated: 
+          description: "Creation timestamp of the entity."
+          format: date-time
+          readOnly: false
+          type: string
+        dateModified: 
+          description: "Update timestamp of this entity."
+          format: date-time
+          readOnly: false
+          type: string
+        SatelliteType:
+          type: object
+          required:
+            - object
+            - type
+          properties:
+            object:
+              type: string
+              enum: ['urn:ngsi-ld:SatelliteType:Satellite','urn:ngsi-ld:SatelliteType:Analysis','urn:ngsi-ld:SatelliteType:Suspicion']
+            type:
+              type: string
+              enum: ['Relationship']
+        analysisType:
+          type: object
+          required:
+            - object
+            - type
+          properties:
+            object:
+              type: string
+              enum: ['urn:ngsi-ld:AnalysisType:LAI','urn:ngsi-ld:AnalysisType:Verticiliose','urn:ngsi-ld:AnalysisType:TeledetectionVerticiliose']
+            type:
+              type: string
+              enum: ['Relationship']
+        wasting:
+          $ref: '#/components/schemas/Property'
+        globalWasting:
+          $ref: '#/components/schemas/Property'
+        watering:
+          $ref: '#/components/schemas/Property'
+        burn:
+          $ref: '#/components/schemas/Property'
+        farming:
+          $ref: '#/components/schemas/Property'
+        boughBrowning:
+          $ref: '#/components/schemas/Property'
+        leafCurl:
+          $ref: '#/components/schemas/Property'
+        status:
+          $ref: '#/components/schemas/Property'
+        analyzeLeafDensity:
+          $ref: '#/components/schemas/Property'
+        analyzeLAI:
+          $ref: '#/components/schemas/Property'
+        analyzeVerticiliose:
+          $ref: '#/components/schemas/Property'
+        analyzeVerticilioseStage:
+          $ref: '#/components/schemas/Property'
+        disease:
+          type: object
+          required:
+            - object
+            - type
+          properties:
+            object:
+              type: string
+            type:
+              type: string
+              enum: ['Relationship']
+          description: "['urn:ngsi-ld:Disease:None', 'urn:ngsi-ld:Disease:Dryout', 'urn:ngsi-ld:Disease:Verticiliose', 'urn:ngsi-ld:Disease:Salinity', 'urn:ngsi-ld:Disease:WoodSick', 'urn:ngsi-ld:Disease:RootRot', 'urn:ngsi-ld:Disease:Drought']"
+        error:
+          type: object
+          required:
+            - value
+            - type
+          properties:
+            value:
+              type: object
+              properties:
+                algorithm:
+                  type: string
+                  enum: ['LAI', 'Verticiliose', 'TeledetectionVerticiliose']
+                message:
+                  type: string
+            type:
+              type: string
+              enum: ['Property']
+          description: "An error occurs"
+    Photo:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          enum: ['Photo']
+        id:
+          type: string
+        filename:
+          $ref: '#/components/schemas/Property'
+        mimetype:
+          $ref: '#/components/schemas/Property'
+        hasSubject:
+          $ref: '#/components/schemas/Relationship'
+        location:
+          $ref: '#/components/schemas/GeoProperty'
+    AnalysisStatus:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+    AnalysisResult:
+      type: object
+      properties:
+        photo:
+          type: string
+        sick:     
+          type: number
+        LAI:     
+          type: number
+        Leaf_density:     
+          type: number
+        status:
+          type: string
+          enum: ['Ok', 'Failed', 'Algorithm Error', 'Backend Error']
+        VerticilioseStage:
+          type: number
+        error:
+          type: string
+    Notification:
+      type: object
+      required:
+        - Satelliteid
+        - analysis
+        - status
+      properties:
+        Satelliteid:
+          type: string
+        analysis:
+          type: string
+          enum: ['LAI', 'Verticiliose', 'TeledetectionVerticiliose', 'apitest']
+        status:
+          type: string
+          enum: ['true', 'false']
+        error:
+          type: string
+    FirebaseResult:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              messageId:
+                type: string
+        canonicalRegistrationTokenCount:
+          type: number
+        failureCount:
+          type: number
+        successCount:
+          type: number
+        multicastId:
+          type: number
+    Login:
+      type: object
+      required:
+        - login
+        - password
+      properties:
+        login: 
+          type: string
+        password:
+          type: string
+    LoginResult:
+      type: object
+      properties:
+        accessToken: 
+          type: string
+        refreshToken: 
+          type: string
+        error:
+          type: object
+          required:
+            - code
+            - message
+          properties:
+            code:
+              type: number
+            message:
+              type: string
+        
