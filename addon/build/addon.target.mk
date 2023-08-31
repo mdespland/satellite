@@ -9,9 +9,12 @@ DEFS_Debug := \
 	'-DV8_DEPRECATION_WARNINGS=1' \
 	'-DV8_DEPRECATION_WARNINGS' \
 	'-DV8_IMMINENT_DEPRECATION_WARNINGS' \
+	'-D_GLIBCXX_USE_CXX11_ABI=1' \
 	'-D_LARGEFILE_SOURCE' \
 	'-D_FILE_OFFSET_BITS=64' \
 	'-D__STDC_FORMAT_MACROS' \
+	'-DOPENSSL_NO_PINSHARED' \
+	'-DOPENSSL_THREADS' \
 	'-DNAPI_CPP_EXCEPTIONS' \
 	'-DBUILDING_NODE_EXTENSION' \
 	'-DDEBUG' \
@@ -25,7 +28,6 @@ CFLAGS_Debug := \
 	-Wall \
 	-Wextra \
 	-Wno-unused-parameter \
-	-fPIC \
 	-fexceptions \
 	-g \
 	-O0
@@ -37,17 +39,17 @@ CFLAGS_C_Debug :=
 CFLAGS_CC_Debug := \
 	-fno-rtti \
 	-fno-exceptions \
-	-std=gnu++1y \
+	-std=gnu++17 \
 	-fexceptions
 
 INCS_Debug := \
-	-I/usr/include/nodejs/include/node \
-	-I/usr/include/nodejs/src \
-	-I/usr/include/nodejs/deps/openssl/config \
-	-I/usr/include/nodejs/deps/openssl/openssl/include \
-	-I/usr/include/nodejs/deps/uv/include \
-	-I/usr/include/nodejs/deps/zlib \
-	-I/usr/include/nodejs/deps/v8/include \
+	-I/root/.cache/node-gyp/18.17.1/include/node \
+	-I/root/.cache/node-gyp/18.17.1/src \
+	-I/root/.cache/node-gyp/18.17.1/deps/openssl/config \
+	-I/root/.cache/node-gyp/18.17.1/deps/openssl/openssl/include \
+	-I/root/.cache/node-gyp/18.17.1/deps/uv/include \
+	-I/root/.cache/node-gyp/18.17.1/deps/zlib \
+	-I/root/.cache/node-gyp/18.17.1/deps/v8/include \
 	-I/home/mde/Satellite/addon/node_modules/node-addon-api \
 	-I$(srcdir)/mlx90641-driver
 
@@ -58,9 +60,12 @@ DEFS_Release := \
 	'-DV8_DEPRECATION_WARNINGS=1' \
 	'-DV8_DEPRECATION_WARNINGS' \
 	'-DV8_IMMINENT_DEPRECATION_WARNINGS' \
+	'-D_GLIBCXX_USE_CXX11_ABI=1' \
 	'-D_LARGEFILE_SOURCE' \
 	'-D_FILE_OFFSET_BITS=64' \
 	'-D__STDC_FORMAT_MACROS' \
+	'-DOPENSSL_NO_PINSHARED' \
+	'-DOPENSSL_THREADS' \
 	'-DNAPI_CPP_EXCEPTIONS' \
 	'-DBUILDING_NODE_EXTENSION'
 
@@ -71,7 +76,6 @@ CFLAGS_Release := \
 	-Wall \
 	-Wextra \
 	-Wno-unused-parameter \
-	-fPIC \
 	-fexceptions \
 	-O3 \
 	-fno-omit-frame-pointer
@@ -83,17 +87,17 @@ CFLAGS_C_Release :=
 CFLAGS_CC_Release := \
 	-fno-rtti \
 	-fno-exceptions \
-	-std=gnu++1y \
+	-std=gnu++17 \
 	-fexceptions
 
 INCS_Release := \
-	-I/usr/include/nodejs/include/node \
-	-I/usr/include/nodejs/src \
-	-I/usr/include/nodejs/deps/openssl/config \
-	-I/usr/include/nodejs/deps/openssl/openssl/include \
-	-I/usr/include/nodejs/deps/uv/include \
-	-I/usr/include/nodejs/deps/zlib \
-	-I/usr/include/nodejs/deps/v8/include \
+	-I/root/.cache/node-gyp/18.17.1/include/node \
+	-I/root/.cache/node-gyp/18.17.1/src \
+	-I/root/.cache/node-gyp/18.17.1/deps/openssl/config \
+	-I/root/.cache/node-gyp/18.17.1/deps/openssl/openssl/include \
+	-I/root/.cache/node-gyp/18.17.1/deps/uv/include \
+	-I/root/.cache/node-gyp/18.17.1/deps/zlib \
+	-I/root/.cache/node-gyp/18.17.1/deps/v8/include \
 	-I/home/mde/Satellite/addon/node_modules/node-addon-api \
 	-I$(srcdir)/mlx90641-driver
 
@@ -113,24 +117,24 @@ $(OBJS): GYP_CXXFLAGS := $(DEFS_$(BUILDTYPE)) $(INCS_$(BUILDTYPE))  $(CFLAGS_$(B
 
 # Suffix rules, putting all outputs into $(obj).
 
-$(obj).$(TOOLSET)/$(TARGET)/%.o: $(srcdir)/%.cpp FORCE_DO_CMD
+$(obj).$(TOOLSET)/$(TARGET)/%.o: $(srcdir)/%.cc FORCE_DO_CMD
 	@$(call do_cmd,cxx,1)
 
-$(obj).$(TOOLSET)/$(TARGET)/%.o: $(srcdir)/%.cc FORCE_DO_CMD
+$(obj).$(TOOLSET)/$(TARGET)/%.o: $(srcdir)/%.cpp FORCE_DO_CMD
 	@$(call do_cmd,cxx,1)
 
 # Try building from generated source, too.
 
-$(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj).$(TOOLSET)/%.cpp FORCE_DO_CMD
-	@$(call do_cmd,cxx,1)
-
 $(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj).$(TOOLSET)/%.cc FORCE_DO_CMD
 	@$(call do_cmd,cxx,1)
 
-$(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj)/%.cpp FORCE_DO_CMD
+$(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj).$(TOOLSET)/%.cpp FORCE_DO_CMD
 	@$(call do_cmd,cxx,1)
 
 $(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj)/%.cc FORCE_DO_CMD
+	@$(call do_cmd,cxx,1)
+
+$(obj).$(TOOLSET)/$(TARGET)/%.o: $(obj)/%.cpp FORCE_DO_CMD
 	@$(call do_cmd,cxx,1)
 
 # End of this set of suffix rules
@@ -143,8 +147,7 @@ LDFLAGS_Release := \
 	-pthread \
 	-rdynamic
 
-LIBS := \
-	-lnode
+LIBS :=
 
 $(obj).target/addon.node: GYP_LDFLAGS := $(LDFLAGS_$(BUILDTYPE))
 $(obj).target/addon.node: LIBS := $(LIBS)

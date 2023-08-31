@@ -25,6 +25,7 @@ var cors = require('cors')
 var StatusService = require('./api/services/statusService');
 var CameraService = require('./api/services/CameraService');
 var ServoService = require('./api/services/ServoService');
+var MLX90641Service = require('./api/services/MLX90641Service');
 const app = express();
 app.use(cors())
 
@@ -62,7 +63,8 @@ openapi.initialize({
     dependencies: {
         statusService: StatusService,
         CameraService: CameraService,
-        ServoService:ServoService
+        ServoService:ServoService,
+        MLX90641Service: MLX90641Service
     },
     paths: './api/paths',
     securityHandlers: {
