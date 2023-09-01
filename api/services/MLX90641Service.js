@@ -64,6 +64,7 @@ await image.toFile('my-two-pixels.png');*/
 module.exports = {
     async updateCamera() {
         await moveServoTo(angle);
+        await new Promise(r => setTimeout(r, 2000));
         var pixels = await bindings.capture();
         var raw=new Uint8Array(width*height*3);
         for (i=0;i<width*height;i++) {
