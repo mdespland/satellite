@@ -24,10 +24,17 @@ const Gpio = require('pigpio').Gpio;
 const PULSE_WIDTH_0 = 500; // Pulse width in microseconds for 0 degrees
 const PULSE_WIDTH_180 = 2000; // Pulse width in microseconds for 180 degrees
 
+const motor = new Gpio(18, {mode: Gpio.OUTPUT});
+
 async function moveServoTo(angle) {
-  let motor = new Gpio(18, {mode: Gpio.OsUTPUT});
+  //let motor = new Gpio(18, {mode: Gpio.OsUTPUT});
   let microSeconds = PULSE_WIDTH_0 + (angle / 180) * (PULSE_WIDTH_180 - PULSE_WIDTH_0);
   await motor.servoWrite(Math.round(microSeconds));
+  return true;
+}
+
+async function stopServo() {
+  await motor.servoWrite(0);
   return true;
 }
 
@@ -49,6 +56,7 @@ module.exports = {
     if (! modes.hasOwnProperty(mode)) mode="nofilter"
     await moveServoTo(modes[mode]);
     await libcamera.jpeg({ config: { output: 'images/'+mode+'.jpg' } });
+    await stopServo();
     return true;
   },
   async getCamera1(mode) {
