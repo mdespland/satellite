@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ThermalView from '../views/ThermalView.vue'
 import MultiSpectralView from '../views/MultiSpectralView.vue'
+import FullScreenView from '../views/FullScreenView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +20,11 @@ const router = createRouter({
       path: '/multispectral',
       name: 'multispectral',
       component: MultiSpectralView
+    },{
+      path: '/fullscreen/:mode',
+      name: 'fullscreen',
+      component: FullScreenView,
+      props: true
     },{
       path: '/about',
       name: 'about',

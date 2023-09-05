@@ -18,6 +18,8 @@ var nocache=0;
 var imageUrl=  ref("http://192.168.1.69:8080/api/camera/"+props.mode+"?nocache="+nocache) 
 //var imageUrl=  ref("@/assets/mlx90641.png")src="@/assets/mlx90641.png"
 
+var fullscreen= ref("/fullscreen/"+props.mode) 
+
 function updateImage() {
     axios
       .put("http://192.168.1.69:8080/api/camera/"+props.mode)
@@ -37,7 +39,8 @@ function updateImage() {
     <div class="left"><img src="@/assets/mlx90641.png" class="imgcam center"></div>
     <div class="menu">
       <span class="titre center">{{title}}</span>
-      <button @click="updateImage" type="button" class="btn btn-primary center">Update the Image</button>
+      <button @click="updateImage" type="button" class="btn btn-primary menuitem center">Update the Image</button>
+      <RouterLink :to="fullscreen" class="btn btn-inverse btn-primary menuitem center">Full Screen</RouterLink>
     </div>
   </div>
 </template>
@@ -74,7 +77,13 @@ function updateImage() {
 .center {
   display: block;
   margin-left: auto;
-  margin-right: auto
+  margin-right: auto;
+}
+
+.menuitem {
+  margin-top: 20px;
+  width: 15vw;
+  text-align: center;
 }
 .menu {
   float: left;
