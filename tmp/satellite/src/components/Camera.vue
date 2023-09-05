@@ -5,6 +5,10 @@ const props = defineProps({
   mode: {
     type: String,
     required: true
+  },
+  title: {
+    type: String,
+    required: true
   }
 })
 
@@ -12,6 +16,7 @@ const props = defineProps({
 var nocache=0;
 
 var imageUrl=  ref("http://192.168.1.69:8080/api/camera/"+props.mode+"?nocache="+nocache) 
+//var imageUrl=  ref("@/assets/mlx90641.png")src="@/assets/mlx90641.png"
 
 function updateImage() {
     axios
@@ -27,24 +32,53 @@ function updateImage() {
 </script>
 
 <template>
-  <div class="greetings">
-    <center><img :src="imageUrl"><br>
-    <button @click="updateImage">Update the Image</button></center>
+  <div class="camera">
+    <!--<img :src="imageUrl"><br>-->
+    <div class="left"><img src="@/assets/mlx90641.png" class="imgcam center"></div>
+    <div class="menu">
+      <span class="titre center">{{title}}</span>
+      <button @click="updateImage" type="button" class="btn btn-primary center">Update the Image</button>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.greetings {
-  width: 100%;
+.titre {
+  color: white;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: bold;
 }
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  position: relative;
-  top: -10px;
+.column {
+  float: left;
+  width: 50vw;
 }
-img {
 
+.camera {
+  border: 2px solid white;
+  display: flex;
+  margin: 5px;
+  padding: 10px;
+  
+}
+.left {
+  float: left;
+  width: 70vw;
+}
+.imgcam {
     max-width: 100%;
+    display: block;
+    margin: 10px;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto
+}
+.menu {
+  float: left;
+  display: block;
+  width: 30vw;
 }
 </style>

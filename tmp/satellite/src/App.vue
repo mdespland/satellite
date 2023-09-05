@@ -5,14 +5,13 @@ import Satellite from './components/Satellite.vue'
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <img alt="Vue logo" class="logo" src="@/assets/orange-logo.png" />
 
     <div class="wrapper">
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/thermal">Thermal</RouterLink>
-        <RouterLink to="/multispectral">Multi Spectral</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/thermal" class="btn btn-inverse btn-primary menuitem">Thermal</RouterLink>
+        <RouterLink to="/multispectral" class="btn btn-inverse btn-primary menuitem">Multi Spectral</RouterLink>
+        <RouterLink to="/about" class="btn btn-inverse btn-primary menuitem">About</RouterLink>
       </nav>
     </div>
   </header>
@@ -22,46 +21,40 @@ import Satellite from './components/Satellite.vue'
 
 <style scoped>
 header {
-  line-height: 1.5;
-  max-height: 100vh;
-  /*position: fixed; 
-  top: 0;*/
-  background:blue;
-  width:100%;
+  margin: 0;
+  //line-height: 1.5;
+  max-height: 140px;
+  width:100vw;
+  height:140px;
 }
 
 .logo {
   display: block;
-  margin: 0 auto 2rem;
+  margin: 20px;
+  float: right;
+  height:  100px;
 }
+
+.menuitem {
+  font-size: 24px;
+  margin-right: 2vw;
+  margin-left: 2vw;
+  margin-top: 2em;
+  min-width: 20vw;
+}
+
 
 nav {
-  width: 100%;
-  font-size: 12px;
+  width: 100vw;
+  font-size: 24px;
   text-align: center;
-  margin-top: 2rem;
+  margin: 0;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
 .routerview {
-  background:green;
-  width: 100%;
+  width: 100vw;
+  max-height: 85vh;
+  height:85vh;
 }
 
 </style>

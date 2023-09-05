@@ -6,31 +6,31 @@ import Camera from '../components/Camera.vue'
   <div class="main">
     <div class="row">
       <div class="column">
-         <Camera mode="nofilter"/>
-         <Camera mode="green"/>
+         <Camera mode="nofilter" class="multispetral" title="No Filter"/>
+         <Camera mode="green" class="multispetral" title="Green"/>
          </div>
       <div class="column">
-        <Camera mode="red"/>
-        <Camera mode="blue"/>
+        <Camera mode="red" class="multispetral" title="Red"/>
+        <Camera mode="blue" class="multispetral" title="Blue"/>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
+<style  scoped>
 .main {
-  width: 100%;
+  width: 100vw;
   display: flex;
-  background: red;
-  min-height: 100vh;
+  min-height: 40vh;
 }
 .column {
   float: left;
-  width: 50%;
-  background: blue;
+  width: 50vw;
+  height: 85vh;
 }
 .row {
-  width: 100%;
+  width: 100vw;
+  height: 45vh;
 }
 
 /* Clear floats after the columns */
@@ -38,5 +38,15 @@ import Camera from '../components/Camera.vue'
   content: "";
   display: table;
   clear: both;
+}
+
+</style>
+
+<style>
+div.multispetral img {
+  max-height: 38vh;
+}
+div.multispetral camera {
+  height: 35vh;
 }
 </style>
