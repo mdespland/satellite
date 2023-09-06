@@ -34,7 +34,9 @@ module.exports = function(CameraService){
         let now = new Date()
         console.log(now.toISOString()+" \t"+req.method+" \t"+req.originalUrl)
         //try {
-            var data=await CameraService.getCamera(mode);
+            color=true
+            if (req.query.hasOwnProperty('color')) color=req.query.color
+            var data=await CameraService.getCamera(mode,color);
             res.set('Content-Type',"image/jpeg");
             res.status(200).end(data);
         /*} catch(error) {
@@ -60,6 +62,16 @@ module.exports = function(CameraService){
         operationId: 'getLastCameraImage'+mode,
         summary: 'Retrieve the photo for the camera with '+mode,
         security: [],
+        parameters: [{
+            "name": "color",
+            "in": "query",
+            "description": "False to reurn greyscale image",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+        }
+        ],
         responses: {
             '200': {
                 description: 'The Photo',

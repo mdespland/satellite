@@ -19,9 +19,9 @@
 const { libcamera } = require('libcamera');
 const sharp = require('sharp');
 const fs = require('fs').promises;
-const Servo = require('lib/servo')
+const Servo = require('../../lib/servo.js')
 
-const servo=new Servo();
+//const servo=new Servo();
 
 //no filter = 170
 // blue = 10
@@ -48,9 +48,14 @@ module.exports = {
     const data = await fs.readFile('images/'+mode+'.jpg', "binary")
     return Buffer.from(data, 'binary');
   },
-  async getCamera(mode) {
+  async getCamera(mode, color=false) {
     if (! modes.hasOwnProperty(mode)) mode="nofilter"
-    const data = await sharp('images/'+mode+'.jpg').toBuffer()
+    
+    if (color) {
+      data = await sharp('images/'+mode+'.jpg').toBuffer()
+    } else {
+      data = await sharp('images/'+mode+'.jpg').greyscale().toBuffer()
+    }
     return data;
   }  
 };

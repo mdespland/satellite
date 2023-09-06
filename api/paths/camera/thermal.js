@@ -60,6 +60,16 @@ module.exports = function(MLX90641Service){
         operationId: 'getLastCameraImage'+mode,
         summary: 'Retrieve the photo for the camera with '+mode,
         security: [],
+        parameters: [{
+            "name": "color",
+            "in": "query",
+            "description": "False to reurn greyscale image",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+        }
+        ],
         responses: {
             '200': {
                 description: 'The Photo',
