@@ -100,6 +100,7 @@ var options = {
         url: '/api/api-docs'
     }
 }
+app.use(express.static('UI/dist'))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(null, options));
 app.use('/.well-known/acme-challenge/KvWRm8IiQO-xUQsEKm5NUxn-4e6WDvU28vcRJCJXIcE', function(req, res) {
     var text="KvWRm8IiQO-xUQsEKm5NUxn-4e6WDvU28vcRJCJXIcE.9Pel9Grl3pr_htwQC2qf0p50t1vd0S3kMujE5AM_KXE";
