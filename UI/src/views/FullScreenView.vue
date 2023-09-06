@@ -4,13 +4,17 @@ const props = defineProps({
   mode: {
     type: String,
     required: true
+  },
+  colored: {
+    type: Boolean,
+    required: true
   }
 })
 </script>
 
 <template>
   <main class="fullscreen">
-    <FullScreen :mode="mode" class="fullscreen"/>
+    <FullScreen :mode="mode" :colored="colored" class="fullscreen"/>
   </main>
 </template>
 

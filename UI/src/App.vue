@@ -22,7 +22,6 @@ import Satellite from './components/Satellite.vue'
 <style scoped>
 header {
   margin: 0;
-  //line-height: 1.5;
   max-height: 140px;
   width:100vw;
   height:140px;

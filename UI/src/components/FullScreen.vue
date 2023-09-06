@@ -5,19 +5,23 @@ const props = defineProps({
   mode: {
     type: String,
     required: true
+  },
+  colored: {
+    type: Boolean,
+    required: true
   }
 })
-
+var baseUrl="";
 var nocache=0;
 
-var imageUrl=  ref("http://192.168.1.69:8080/api/camera/"+props.mode+"?nocache="+nocache) 
+var imageUrl=  ref(baseUrl+"/api/camera/"+props.mode+"?nocache="+nocache+"&color="+props.colored) 
 //var imageUrl=  ref("@/assets/mlx90641.png")src="@/assets/mlx90641.png"
 
 </script>
 
 <template>
   <div class="camera">
-    <img src="@/assets/mlx90641.png" class="center">
+    <img :src="imageUrl" class="center">
   </div>
 </template>
 

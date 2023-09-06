@@ -21,7 +21,7 @@ const router = createRouter({
       name: 'multispectral',
       component: MultiSpectralView
     },{
-      path: '/fullscreen/:mode',
+      path: '/fullscreen/:mode/:colored',
       name: 'fullscreen',
       component: FullScreenView,
       props: true
