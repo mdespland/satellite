@@ -50,11 +50,17 @@ module.exports = {
     return Buffer.from(data, 'binary');
   },
   async getCamera(mode, color=false,left=0,top=0,width=0,height=0, angle=0) {
+    console.log("angle : "+angle);
     if (! modes.hasOwnProperty(mode)) mode="nofilter"
     image=await sharp('images/'+mode+'.jpg');
     if (!color) image=await image.greyscale();
+    console.log({left:left, top: top, width: width, height: height})
     if (width>0 && height>0) image=await image.extract({left:left, top: top, width: width, height: height})
-    if (angle>0) image=await image.rotate(angle);
+    if (angle>0) {
+	image=await image.rotate(angle);
+	console.log("rotate : "+angle)
+	}
+
     return await image.toBuffer();
   }  
 };

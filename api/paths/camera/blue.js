@@ -46,7 +46,7 @@ module.exports = function(CameraService){
             if (req.query.hasOwnProperty('left')) left=req.query.left
             if (req.query.hasOwnProperty('width')) width=req.query.width
             if (req.query.hasOwnProperty('height')) height=req.query.height
-            var data=await CameraService.getCamera(mode,color);
+            var data=await CameraService.getCamera(mode,color,top,left,width,height,angle);
             res.set('Content-Type',"image/jpeg");
             res.status(200).end(data);
         /*} catch(error) {
