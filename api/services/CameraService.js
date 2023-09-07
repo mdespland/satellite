@@ -21,18 +21,19 @@ const sharp = require('sharp');
 const fs = require('fs').promises;
 const Servo = require('../../lib/servo.js')
 
-//const servo=new Servo();
+const servo=new Servo();
 
 //no filter = 170
 // blue = 10
 // green = 61
 // red = 115
+//95+90
 
 modes= {
-  "nofilter" : 170,
-  "blue" : 10,
-  "green" : 61,
-  "red" : 115
+  "nofilter" : 205,
+  "blue" : 42,
+  "green" : 95,
+  "red" : 150
 }
 box={ width: 1920, height: 1080, left: 60, top: 40 }
 

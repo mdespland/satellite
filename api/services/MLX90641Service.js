@@ -23,9 +23,9 @@ const Servo = require('../../lib/servo')
 
 const width = 12;
 const height = 16;
-//const servo=new Servo();
+const servo=new Servo();
 
-angle = 61;
+angle = 95;
 
 module.exports = {
     async updateCamera() {
