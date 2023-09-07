@@ -35,8 +35,18 @@ module.exports = function(CameraService){
         console.log(now.toISOString()+" \t"+req.method+" \t"+req.originalUrl)
         //try {
             color=true
+            top=0
+            left=0
+            angle=0
+            width=0
+            height=0
             if (req.query.hasOwnProperty('color')) color=req.query.color
-            var data=await CameraService.getCamera(mode,color);
+            if (req.query.hasOwnProperty('angle')) angle=req.query.angle
+            if (req.query.hasOwnProperty('top')) top=req.query.top
+            if (req.query.hasOwnProperty('left')) left=req.query.left
+            if (req.query.hasOwnProperty('width')) width=req.query.width
+            if (req.query.hasOwnProperty('height')) height=req.query.height
+            var data=await CameraService.getCamera(mode,color,top,left,width,height,angle);
             res.set('Content-Type',"image/jpeg");
             res.status(200).end(data);
         /*} catch(error) {
@@ -69,6 +79,46 @@ module.exports = function(CameraService){
             "required": false,
             "schema": {
               "type": "boolean"
+            }
+        },{
+            "name": "angle",
+            "in": "query",
+            "description": "Rotate the image",
+            "required": false,
+            "schema": {
+                "type": "number"
+            }
+        },{
+            "name": "top",
+            "in": "query",
+            "description": "Top corner for extraction, default 0",
+            "required": false,
+            "schema": {
+                "type": "number"
+            }
+        },{
+            "name": "left",
+            "in": "query",
+            "description": "Left corner for extraction, default 0",
+            "required": false,
+            "schema": {
+                "type": "number"
+            }
+        },{
+            "name": "width",
+            "in": "query",
+            "description": "width of the rectangle to extract, default 0 (no extraction)",
+            "required": false,
+            "schema": {
+                "type": "number"
+            }
+        },{
+            "name": "height",
+            "in": "query",
+            "description": "height of the rectangle to extract, default 0 (no extraction)",
+            "required": false,
+            "schema": {
+                "type": "number"
             }
         }
         ],
