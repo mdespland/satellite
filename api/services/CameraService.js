@@ -49,14 +49,12 @@ module.exports = {
     const data = await fs.readFile('images/'+mode+'.jpg', "binary")
     return Buffer.from(data, 'binary');
   },
-  async getCamera(mode, color=false) {
+  async getCamera(mode, color=false,left=0,top=0,width=0,height=0, angle=0) {
     if (! modes.hasOwnProperty(mode)) mode="nofilter"
-    
-    if (color) {
-      data = await sharp('images/'+mode+'.jpg').toBuffer()
-    } else {
-      data = await sharp('images/'+mode+'.jpg').greyscale().toBuffer()
-    }
-    return data;
+    image=await sharp('images/'+mode+'.jpg');
+    if (!color) image=await image.greyscale();
+    if (width>0 && height>0) image=await image.extract({left:left, top: top, width: width, height: height})
+    if (angle>0) image=await image.rotate(angle);
+    return await image.toBuffer();
   }  
 };

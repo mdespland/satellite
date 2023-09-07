@@ -53,7 +53,7 @@ module.exports = {
         return true;
     },
     async getCamera() {
-        const data = await sharp('images/mlx90641.png').toBuffer()
+        const data = await sharp('images/mlx90641.png').rotate(90).toBuffer()
         return data;
     }
 };
