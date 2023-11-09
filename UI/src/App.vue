@@ -1,6 +1,39 @@
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+
 import Satellite from './components/Satellite.vue'
+
+const router = useRouter()
+
+onMounted(() => {
+  window.addEventListener('keydown', doCommand);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', doCommand);
+});
+
+let page="demo"
+let slide=0
+
+function doCommand(e) {
+
+  let cmd = String.fromCharCode(e.keyCode).toLowerCase();
+  if (cmd==="(") {
+    slide++;
+    router.push("/multispectral")
+  } else {
+    slide--;
+    router.push("/thermal")
+  }
+  // do stuff
+  console.log(cmd);
+  console.log("Page : "+page+" slide : "+slide)
+
+}
+
 </script>
 
 <template>

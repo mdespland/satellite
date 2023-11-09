@@ -25,12 +25,12 @@ const width = 12;
 const height = 16;
 const servo=new Servo();
 
-angle = 95;
+const angle = 95;
 
 module.exports = {
     async updateCamera() {
         await servo.moveTo(angle);
-        await new Promise(r => setTimeout(r, 2000));
+        await new Promise(r => setTimeout(r, 5000));
         var pixels = await bindings.capture();
         await servo.stop();
         var raw=new Uint8Array(width*height*3);

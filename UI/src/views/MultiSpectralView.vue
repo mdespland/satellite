@@ -1,5 +1,16 @@
 <script setup>
 import Camera from '../components/Camera.vue'
+import { ref, onMounted, onUnmounted } from 'vue'
+
+/*onMounted(() => {
+  console.log("Page : "+this.page+" slide : "+this.slide)
+})*/
+/*
+export default {
+  mounted() {
+    console.log("Page : "+this.page+" slide : "+this.slide)
+  }
+}*/
 </script>
 
 <template>
