@@ -3,6 +3,12 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import { useRouter, useRoute } from 'vue-router'
 
+import { inject } from 'vue'
+const page = inject('page')
+const language = inject('language')
+const slide = inject('slide')
+const slideauto = inject('slideauto')
+
 import Satellite from './components/Satellite.vue'
 
 const router = useRouter()
@@ -15,40 +21,45 @@ onUnmounted(() => {
   window.removeEventListener('keydown', doCommand);
 });
 
-let page="demo"
-let slide=0
-
 function doCommand(e) {
 
   let cmd = String.fromCharCode(e.keyCode).toLowerCase();
   if (cmd==="(") {
-    slide++;
-    router.push("/multispectral")
+    //next
+    switch (page.value) {
+      case 'hyperspectral':
+        router.push("/multispectralbw")
+      break;
+      case 'slides':
+        slide.value++;
+        if (slide.value>12) slide.value=0;
+        console.log("push /slides/"+language.value+"/"+slide.value)
+        router.push("/slides/"+language.value+"/"+slide.value)
+      break;
+    }
   } else {
-    slide--;
-    router.push("/thermal")
+    //back
+    switch (page.value) {
+      case 'hyperspectralbw':
+        router.push("/multispectral")
+      break;
+      case 'slides':
+        slide.value--;
+        if (slide.value<0) slide.value=0;
+        router.push("/slides/"+language.value+"/"+slide.value)
+      break;
+    }
   }
   // do stuff
   console.log(cmd);
-  console.log("Page : "+page+" slide : "+slide)
+  console.log("Page : "+page.value+" "+language.value+" slide : "+slide.value)
 
 }
 
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/orange-logo.png" />
-
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/thermal" class="btn btn-inverse btn-primary menuitem">Thermal</RouterLink>
-        <RouterLink to="/multispectral" class="btn btn-inverse btn-primary menuitem">Multi Spectral</RouterLink>
-        <RouterLink to="/about" class="btn btn-inverse btn-primary menuitem">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
+  <div class="home"><RouterLink to="/" class="routerlink"><img class="logo" alt="Vue logo" src="@/assets/orange-logo.png" /></RouterLink></div>
   <RouterView class="routerview"/>
 </template>
 
@@ -67,26 +78,46 @@ header {
   height:  100px;
 }
 
-.menuitem {
-  font-size: 24px;
-  margin-right: 2vw;
-  margin-left: 2vw;
-  margin-top: 2em;
-  min-width: 20vw;
-}
 
+/*.home {
+  margin: 20px;
+  right:0;
+  bottom:0;
+  display: block;
+  float: right;
+  position: absolute;
+  z-index: 10;
+}*/
 
-nav {
-  width: 100vw;
-  font-size: 24px;
-  text-align: center;
-  margin: 0;
-}
-
+.home,
 .routerview {
   width: 100vw;
-  max-height: 85vh;
-  height:85vh;
+  max-height: 100vh;
+  height:100vh;
+  position: absolute;
+  
 }
+ 
 
+.routerview {
+  z-index: -1;
+}
+.home {
+  z-index: 10;
+  pointer-events: none; 
+
+}
+.routerlink {
+  pointer-events: auto; 
+
+}
+.logo {
+  margin: 20px;
+  right:0;
+  bottom:0;
+  display: block;
+  float: right;
+  position: absolute;
+  z-index: 10;  
+}
 </style>

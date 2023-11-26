@@ -2,7 +2,7 @@
 import Camera from '../components/Camera.vue'
 import { ref, inject, onMounted, onUnmounted } from 'vue'
 const page = inject('page')
-page.value="hyperspectral"
+page.value="slides"
 
 /*onMounted(() => {
   console.log("Page : "+this.page+" slide : "+this.slide)

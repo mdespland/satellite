@@ -2,17 +2,8 @@
 import Camera from '../components/Camera.vue'
 import { ref, inject, onMounted, onUnmounted } from 'vue'
 const page = inject('page')
-page.value="hyperspectral"
+page.value="hyperspectralbw"
 
-/*onMounted(() => {
-  console.log("Page : "+this.page+" slide : "+this.slide)
-})*/
-/*
-export default {
-  mounted() {
-    console.log("Page : "+this.page+" slide : "+this.slide)
-  }
-}*/
 </script>
 
 <template>
@@ -20,11 +11,11 @@ export default {
     <div class="row">
       <div class="column">
          <Camera mode="nofilter" class="multispetral" title="No Filter"/>
-         <Camera mode="green" class="multispetral" title="Green" />
+         <Camera mode="green" class="multispetral" title="Green" colored="greyscale"/>
          </div>
       <div class="column">
-        <Camera mode="red" class="multispetral" title="Red"/>
-        <Camera mode="blue" class="multispetral" title="Blue"/>
+        <Camera mode="red" class="multispetral" title="Red" colored="greyscale"/>
+        <Camera mode="blue" class="multispetral" title="Blue" colored="greyscale"/>
       </div>
     </div>
   </div>

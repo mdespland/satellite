@@ -11,12 +11,26 @@ const props = defineProps({
   title: {
     type: String,
     required: true
-  }
+  },
+  colored: {
+    type: String,
+    required: false, 
+    default: "colored"
+  },
 })
-const colorMode = ref(["colored"])
+
+
+let colored=[]
+if (props.colored==="colored") {
+  colored = ["colored"]
+} else {
+
+}
+
+const colorMode = ref(colored)
 var nocache=0;
 var baseUrl="";
-var imageUrl=  ref(baseUrl+"/api/camera/"+props.mode+"?nocache="+nocache) 
+var imageUrl=  ref(baseUrl+"/api/camera/"+props.mode+"?nocache="+nocache+"&color="+(colorMode.value.length==1)) 
 
 var fullscreen= ref("/fullscreen/"+props.mode+"/"+(colorMode.value.length==1)) 
 var checkboxid= ref("colorChecked"+props.mode) 
@@ -49,7 +63,6 @@ function changeColorMode() {
 <template>
   <div class="camera">
     <div class="left"><img :src="imageUrl"> class="imgcam center"></div>
-    <!--<div class="left"><img src="@/assets/mlx90641.png" class="imgcam center"></div>-->
     <div class="menu">
       <span class="titre center">{{title}}</span>
       <button @click="updateImage" type="button" class="btn btn-primary menuitem center">Update the Image</button>
